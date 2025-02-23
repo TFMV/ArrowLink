@@ -1,0 +1,32 @@
+graph TD
+    subgraph "Python Client"
+        A[main.py] --> |imports| B[proto/dataexchange_pb2_grpc.py]
+        A --> |imports| C[proto/dataexchange_pb2.py]
+        B --> |relative import| C
+        A --> |"stub.GetArrowData(Empty())"| D[gRPC Channel]
+    end
+
+    subgraph "Proto Definition"
+        E[dataexchange.proto] --> |protoc| B
+        E --> |protoc| C
+        E --> |protoc| F[Go: dataexchange.pb.go]
+    end
+
+    subgraph "Go Server"
+        G[arrowlink.go] --> |imports| F
+        G --> |"implements"| H[ArrowDataService]
+    end
+
+    D <--> |"gRPC (port 50051)"| H
+
+    subgraph "Data Flow"
+        H --> |"Arrow IPC Stream"| I[Arrow Record Batch]
+        I --> |"Serialized bytes"| D
+        D --> |"response.payload"| J[PyArrow Reader]
+        J --> |"to_pandas()"| K[Pandas DataFrame]
+    end
+
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style G fill:#9cf,stroke:#333,stroke-width:2px
+    style E fill:#fcf,stroke:#333,stroke-width:2px
+    style D fill:#ff9,stroke:#333,stroke-width:2px
