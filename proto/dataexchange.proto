@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package dataexchange;
+
+option go_package = "proto/dataexchange;dataexchange";
+
+service ArrowDataService {
+  // Streaming response for efficient data transfer
+  rpc GetArrowData(Empty) returns (stream ArrowData);
+
+  // Accepts Arrow data and processes it
+  rpc SendArrowData(stream ArrowData) returns (Ack);
+}
+
+message Empty {}
+
+message ArrowData {
+  // Serialized Arrow data in bytes
+  bytes payload = 1;
+}
+
+message Ack {
+  // Acknowledgment response
+  string message = 1;
+}
