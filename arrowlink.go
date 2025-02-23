@@ -15,7 +15,7 @@ import (
 )
 
 type server struct {
-	pb.UnimplementedArrowDataServiceServer
+	pb.ArrowDataServiceServer
 }
 
 func (s *server) GetArrowData(req *pb.Empty, stream pb.ArrowDataService_GetArrowDataServer) error {
