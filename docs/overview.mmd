@@ -14,19 +14,27 @@ graph TD
 
     subgraph "Go Server"
         G[arrowlink.go] --> |imports| F
-        G --> |"implements"| H[ArrowDataService]
+        G --> |imports| L[arrow-go/v18]
+        G --> |imports| M[zap logger]
+        G --> |implements| H[ArrowDataService]
+        H --> |embedded| N[UnimplementedArrowDataServiceServer]
     end
 
     D <--> |"gRPC (port 50051)"| H
 
     subgraph "Data Flow"
-        H --> |"Arrow IPC Stream"| I[Arrow Record Batch]
-        I --> |"Serialized bytes"| D
+        H --> |"Create Schema"| O[Arrow Schema]
+        O --> |"Build Record"| P[Record Builder]
+        P --> |"Append Data"| I[Arrow Record Batch]
+        I --> |"IPC Writer"| Q[Buffer]
+        Q --> |"Serialized bytes"| D
         D --> |"response.payload"| J[PyArrow Reader]
-        J --> |"to_pandas()"| K[Pandas DataFrame]
+        J --> |"read_all()"| R[PyArrow Table]
     end
 
     style A fill:#f9f,stroke:#333,stroke-width:2px
     style G fill:#9cf,stroke:#333,stroke-width:2px
     style E fill:#fcf,stroke:#333,stroke-width:2px
     style D fill:#ff9,stroke:#333,stroke-width:2px
+    style L fill:#bfb,stroke:#333,stroke-width:2px
+    style M fill:#fbf,stroke:#333,stroke-width:2px
