@@ -17,7 +17,7 @@ import (
 )
 
 type Server struct {
-	pb.UnimplementedArrowDataServiceServer
+	pb.ArrowDataServiceServer
 	logger *zap.Logger
 }
 
