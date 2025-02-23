@@ -2,6 +2,10 @@
 
 This is a simple implementation of a gRPC service that allows for the transfer of Arrow data between a Go server and a Python client.
 
+## Overview
+
+![Overview](docs/arrowlink.png)
+
 ## Setup
 
 ### Install the dependencies
