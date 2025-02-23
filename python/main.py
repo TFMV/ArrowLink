@@ -9,7 +9,7 @@ def run():
     stub = ArrowDataServiceStub(channel)
     
     response_stream = stub.GetArrowData(Empty())
-    
+
     for response in response_stream:
         reader = ipc.RecordBatchStreamReader(pa.BufferReader(response.payload))
         table = reader.read_all()
