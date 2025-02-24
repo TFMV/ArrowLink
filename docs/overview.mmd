@@ -26,7 +26,7 @@ graph TD
         MW --> |logging| M
         MW --> |recovery| REC[Recovery Handler]
         GS --> |implements| H[ArrowDataService]
-        H --> |embedded| N[UnimplementedArrowDataServiceServer]
+        H --> |embedded| N[ArrowDataServiceServer]
         H --> |uses| S
     end
 

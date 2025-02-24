@@ -1,22 +1,26 @@
 package main
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/TFMV/ArrowLink/arrow"
 	"github.com/TFMV/ArrowLink/grpcserver"
 	"go.uber.org/zap"
 )
 
 func main() {
-	// Create zap logger (production configuration)
 	logger, err := zap.NewProduction()
 	if err != nil {
-		panic(err)
+		// Here we avoid panic to make debugging easier
+		fmt.Fprintln(os.Stderr, "Failed to initialize logger:", err)
+		os.Exit(1)
 	}
 	defer logger.Sync()
 
-	// Create arrow service
+	// Create the arrow service
 	arrowService := arrow.NewArrowService()
 
-	// Start the gRPC server with our arrowService injected.
+	// Start the gRPC server with the arrow service injected
 	grpcserver.StartGRPCServer(":50051", logger, arrowService)
 }
