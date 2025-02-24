@@ -44,7 +44,7 @@ func (s *arrowService) GetData() ([]byte, error) {
 	record := builder.NewRecord()
 	defer record.Release()
 
-	// Serialize record
+	// Serialize record using Arrow IPC
 	var buf bytes.Buffer
 	writer := ipc.NewWriter(&buf, ipc.WithSchema(schema))
 	if err := writer.Write(record); err != nil {

@@ -3,7 +3,10 @@ graph TD
         A[main.py] --> |imports| B[proto/dataexchange_pb2_grpc.py]
         A --> |imports| C[proto/dataexchange_pb2.py]
         B --> |relative import| C
-        A --> |"stub.GetArrowData(Empty())"| D[gRPC Channel]
+        A --> |creates| L1[LoggingInterceptor]
+        A --> |creates| SC[Secure Channel]
+        SC --> |wraps| L1
+        L1 --> |"stub.GetArrowData(Empty())"| D[gRPC Channel]
     end
 
     subgraph "Proto Definition"
@@ -12,22 +15,30 @@ graph TD
         E --> |protoc| F[Go: dataexchange.pb.go]
     end
 
-    subgraph "Go Server"
-        G[arrowlink.go] --> |imports| F
-        G --> |imports| M[zap logger]
-        G --> |implements| H[ArrowDataService]
+    subgraph "Go Server Components"
+        G[arrowlink.go] --> |initializes| M[Zap Logger]
+        G --> |creates| S[Arrow Service]
+        G --> |starts| GS[gRPC Server]
+    end
+
+    subgraph "gRPC Server"
+        GS --> |uses| MW[Middleware]
+        MW --> |logging| M
+        MW --> |recovery| REC[Recovery Handler]
+        GS --> |implements| H[ArrowDataService]
         H --> |embedded| N[UnimplementedArrowDataServiceServer]
-        H --> |uses| S[Arrow Service]
+        H --> |uses| S
     end
 
     subgraph "Arrow Service"
-        S --> |imports| L[arrow-go/v18]
+        S --> |imports| L2[arrow-go/v18]
         S --> |"Create Schema"| O[Arrow Schema]
         O --> |"Build Record"| P[Record Builder]
         P --> |"Append Data"| I[Arrow Record Batch]
         I --> |"IPC Writer"| Q[Buffer]
     end
 
+    D <--> |"gRPC (TLS/50051)"| GS
     Q --> |"Serialized bytes"| D
     D --> |"response.payload"| J[PyArrow Reader]
     J --> |"read_all()"| R[PyArrow Table]
@@ -36,6 +47,10 @@ graph TD
     style G fill:#9cf,stroke:#333,stroke-width:2px
     style E fill:#fcf,stroke:#333,stroke-width:2px
     style D fill:#ff9,stroke:#333,stroke-width:2px
-    style L fill:#bfb,stroke:#333,stroke-width:2px
+    style L2 fill:#bfb,stroke:#333,stroke-width:2px
     style M fill:#fbf,stroke:#333,stroke-width:2px
     style S fill:#fdb,stroke:#333,stroke-width:2px
+    style GS fill:#dff,stroke:#333,stroke-width:2px
+    style MW fill:#ffd,stroke:#333,stroke-width:2px
+    style L1 fill:#ddf,stroke:#333,stroke-width:2px
+    style SC fill:#fdd,stroke:#333,stroke-width:2px
