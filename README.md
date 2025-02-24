@@ -50,17 +50,35 @@ graph TD
     D --> |"response.payload"| J[PyArrow Reader]
     J --> |"read_all()"| R[PyArrow Table]
 
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style G fill:#9cf,stroke:#333,stroke-width:2px
-    style E fill:#fcf,stroke:#333,stroke-width:2px
-    style D fill:#ff9,stroke:#333,stroke-width:2px
-    style L2 fill:#bfb,stroke:#333,stroke-width:2px
-    style M fill:#fbf,stroke:#333,stroke-width:2px
-    style S fill:#fdb,stroke:#333,stroke-width:2px
-    style GS fill:#dff,stroke:#333,stroke-width:2px
-    style MW fill:#ffd,stroke:#333,stroke-width:2px
-    style L1 fill:#ddf,stroke:#333,stroke-width:2px
-    style SC fill:#fdd,stroke:#333,stroke-width:2px
+    %% Modern Color Palette
+    style A fill:#E6F3FF,stroke:#1E90FF,stroke-width:2px,color:#1E90FF %% Light blue, vibrant stroke
+    style B fill:#F0F8FF,stroke:#4682B4,stroke-width:1px %% Softer blue
+    style C fill:#F0F8FF,stroke:#4682B4,stroke-width:1px
+    style L1 fill:#B3D9FF,stroke:#1E90FF,stroke-width:2px %% Medium blue
+    style SC fill:#CCE5FF,stroke:#1E90FF,stroke-width:2px %% Light-medium blue
+    style D fill:#FFD700,stroke:#DAA520,stroke-width:2px,color:#DAA520 %% Gold for gRPC Channel
+
+    style E fill:#F5E6FF,stroke:#8A2BE2,stroke-width:2px,color:#8A2BE2 %% Light purple for proto
+    style F fill:#E6CCFF,stroke:#8A2BE2,stroke-width:1px
+
+    style G fill:#E6FFE6,stroke:#32CD32,stroke-width:2px,color:#32CD32 %% Light green for Go entry
+    style M fill:#CCFFCC,stroke:#32CD32,stroke-width:1px %% Soft green
+    style S fill:#B3FFB3,stroke:#228B22,stroke-width:2px %% Medium green
+    style GS fill:#99FF99,stroke:#228B22,stroke-width:2px %% Light green
+
+    style MW fill:#FFFFE6,stroke:#FFD700,stroke-width:1px %% Pale yellow
+    style REC fill:#FFFACD,stroke:#FFD700,stroke-width:1px
+    style H fill:#FFFFCC,stroke:#FFD700,stroke-width:2px
+    style N fill:#FFFFCC,stroke:#FFD700,stroke-width:1px
+
+    style L2 fill:#FFE6E6,stroke:#FF4500,stroke-width:2px,color:#FF4500 %% Light red for Arrow
+    style O fill:#FFD9D9,stroke:#FF4500,stroke-width:1px
+    style P fill:#FFD9D9,stroke:#FF4500,stroke-width:1px
+    style I fill:#FFCCCC,stroke:#FF4500,stroke-width:2px
+    style Q fill:#FFB3B3,stroke:#FF4500,stroke-width:2px
+
+    style J fill:#FFF0E6,stroke:#FF6347,stroke-width:2px %% Soft coral
+    style R fill:#FFE6CC,stroke:#FF6347,stroke-width:2px
 ```
 
 ## Key Features
