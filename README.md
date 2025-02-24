@@ -4,10 +4,6 @@ ArrowLink is a demonstration of using Apache Arrow for efficient data exchange b
 
 ## Overview
 
-![Overview](docs/arrowlink.png)
-
-## Architecture
-
 ```mermaid
 graph TD
     subgraph "Python Client"
