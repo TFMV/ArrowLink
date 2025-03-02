@@ -1,6 +1,6 @@
 # ArrowLink
 
-ArrowLink is a demonstration of using Apache Arrow for efficient data exchange between a Go-based gRPC server and a Python client. It leverages Arrow’s zero-copy serialization and gRPC streaming to transfer structured data at high speeds.
+ArrowLink is a demonstration of using Apache Arrow for efficient data exchange between a Go-based gRPC server and a Python client. It leverages Arrow's zero-copy serialization and gRPC streaming to transfer structured data at high speeds.
 
 ## Overview
 
@@ -50,35 +50,40 @@ graph TD
     D --> |"response.payload"| J[PyArrow Reader]
     J --> |"read_all()"| R[PyArrow Table]
 
-    %% Modern Color Palette
-    style A fill:#E6F3FF,stroke:#1E90FF,stroke-width:2px,color:#1E90FF %% Light blue, vibrant stroke
-    style B fill:#F0F8FF,stroke:#4682B4,stroke-width:1px %% Softer blue
-    style C fill:#F0F8FF,stroke:#4682B4,stroke-width:1px
-    style L1 fill:#B3D9FF,stroke:#1E90FF,stroke-width:2px %% Medium blue
-    style SC fill:#CCE5FF,stroke:#1E90FF,stroke-width:2px %% Light-medium blue
-    style D fill:#FFD700,stroke:#DAA520,stroke-width:2px,color:#DAA520 %% Gold for gRPC Channel
+    %% Python Client section - Blue theme
+    style A fill:#2B6CB0,stroke:#1A365D,stroke-width:2px,color:#FFFFFF
+    style B fill:#4299E1,stroke:#2C5282,stroke-width:1px,color:#FFFFFF
+    style C fill:#4299E1,stroke:#2C5282,stroke-width:1px,color:#FFFFFF
+    style L1 fill:#3182CE,stroke:#2A4365,stroke-width:2px,color:#FFFFFF
+    style SC fill:#2B6CB0,stroke:#1A365D,stroke-width:2px,color:#FFFFFF
 
-    style E fill:#F5E6FF,stroke:#8A2BE2,stroke-width:2px,color:#8A2BE2 %% Light purple for proto
-    style F fill:#E6CCFF,stroke:#8A2BE2,stroke-width:1px
+    %% Proto Definition - Purple theme
+    style E fill:#6B46C1,stroke:#44337A,stroke-width:2px,color:#FFFFFF
+    style F fill:#805AD5,stroke:#553C9A,stroke-width:1px,color:#FFFFFF
 
-    style G fill:#E6FFE6,stroke:#32CD32,stroke-width:2px,color:#32CD32 %% Light green for Go entry
-    style M fill:#CCFFCC,stroke:#32CD32,stroke-width:1px %% Soft green
-    style S fill:#B3FFB3,stroke:#228B22,stroke-width:2px %% Medium green
-    style GS fill:#99FF99,stroke:#228B22,stroke-width:2px %% Light green
+    %% Go Server - Green theme
+    style G fill:#2F855A,stroke:#22543D,stroke-width:2px,color:#FFFFFF
+    style M fill:#38A169,stroke:#276749,stroke-width:1px,color:#FFFFFF
+    style S fill:#48BB78,stroke:#2F855A,stroke-width:2px,color:#FFFFFF
+    style GS fill:#68D391,stroke:#38A169,stroke-width:2px,color:#000000
 
-    style MW fill:#FFFFE6,stroke:#FFD700,stroke-width:1px %% Pale yellow
-    style REC fill:#FFFACD,stroke:#FFD700,stroke-width:1px
-    style H fill:#FFFFCC,stroke:#FFD700,stroke-width:2px
-    style N fill:#FFFFCC,stroke:#FFD700,stroke-width:1px
+    %% gRPC Server - Orange theme
+    style MW fill:#DD6B20,stroke:#9C4221,stroke-width:1px,color:#FFFFFF
+    style REC fill:#ED8936,stroke:#C05621,stroke-width:1px,color:#FFFFFF
+    style H fill:#F6AD55,stroke:#DD6B20,stroke-width:2px,color:#000000
+    style N fill:#FBD38D,stroke:#ED8936,stroke-width:1px,color:#000000
 
-    style L2 fill:#FFE6E6,stroke:#FF4500,stroke-width:2px,color:#FF4500 %% Light red for Arrow
-    style O fill:#FFD9D9,stroke:#FF4500,stroke-width:1px
-    style P fill:#FFD9D9,stroke:#FF4500,stroke-width:1px
-    style I fill:#FFCCCC,stroke:#FF4500,stroke-width:2px
-    style Q fill:#FFB3B3,stroke:#FF4500,stroke-width:2px
+    %% Arrow Service - Red theme
+    style L2 fill:#C53030,stroke:#822727,stroke-width:2px,color:#FFFFFF
+    style O fill:#E53E3E,stroke:#C53030,stroke-width:1px,color:#FFFFFF
+    style P fill:#E53E3E,stroke:#C53030,stroke-width:1px,color:#FFFFFF
+    style I fill:#F56565,stroke:#E53E3E,stroke-width:2px,color:#FFFFFF
+    style Q fill:#FC8181,stroke:#F56565,stroke-width:2px,color:#000000
 
-    style J fill:#FFF0E6,stroke:#FF6347,stroke-width:2px %% Soft coral
-    style R fill:#FFE6CC,stroke:#FF6347,stroke-width:2px
+    %% Communication - Yellow theme
+    style D fill:#D69E2E,stroke:#975A16,stroke-width:2px,color:#000000
+    style J fill:#ECC94B,stroke:#D69E2E,stroke-width:2px,color:#000000
+    style R fill:#F6E05E,stroke:#ECC94B,stroke-width:2px,color:#000000
 ```
 
 ## Key Features
@@ -88,6 +93,24 @@ graph TD
 - 📡 Streaming support for handling large datasets
 - 🏎 High-speed, zero-copy serialization for optimal performance
 - 🔧 Extensible architecture for integrating with real-world data systems
+
+## Performance Benchmarks
+
+ArrowLink demonstrates exceptional performance when handling large datasets. Below are the results from our benchmark tests:
+
+| Rows      | Size (KB) | Generation Time (ms) | Serialization Time (ms) | Total Time (ms) |
+| --------- | --------- | -------------------- | ----------------------- | --------------- |
+| 1,000     | 29        | 0.77                 | 0.17                    | 0.95            |
+| 250,750   | 7,132     | 27.83                | 3.29                    | 31.12           |
+| 500,500   | 14,236    | 35.62                | 3.51                    | 39.14           |
+| 750,250   | 21,339    | 45.42                | 6.50                    | 51.93           |
+| 1,000,000 | 28,443    | 52.50                | 3.58                    | 56.09           |
+
+These results highlight ArrowLink's ability to:
+
+- Process 1 million rows in just 56ms
+- Maintain efficient serialization even as data size increases
+- Achieve compression ratios that keep data sizes manageable
 
 ## Use Cases
 
@@ -126,6 +149,18 @@ go run arrowlink.go
 python python/main.py
 ```
 
+### Run the benchmark
+
+```bash
+go run cmd/benchmark/main.go --min 1000 --max 1000000 --steps 5
+```
+
+### Run the dashboard
+
+```bash
+streamlit run python/dashboard.py
+```
+
 ## Sample Output
 
 ```bash
@@ -136,3 +171,16 @@ value: double not null
 id: [[1]]
 value: [[3.14]]
 ```
+
+## Docker Support
+
+You can also run ArrowLink using Docker Compose:
+
+```bash
+docker-compose up
+```
+
+This will start both the server and the dashboard, making them accessible at:
+
+- gRPC Server: localhost:50051
+- Dashboard: <http://localhost:8501>

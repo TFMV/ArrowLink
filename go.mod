@@ -5,6 +5,7 @@ go 1.24
 require (
 	github.com/apache/arrow-go/v18 v18.1.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0
+	github.com/spf13/cobra v1.9.1
 	go.uber.org/zap v1.24.0
 	google.golang.org/grpc v1.69.2
 	google.golang.org/protobuf v1.36.1
@@ -14,9 +15,11 @@ require (
 	github.com/goccy/go-json v0.10.4 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/google/flatbuffers v24.12.23+incompatible // indirect
+	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/klauspost/compress v1.17.11 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.9 // indirect
 	github.com/pierrec/lz4/v4 v4.1.22 // indirect
+	github.com/spf13/pflag v1.0.6 // indirect
 	github.com/zeebo/xxh3 v1.0.2 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	go.uber.org/multierr v1.10.0 // indirect

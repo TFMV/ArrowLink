@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    ports:
+      - "50051:50051"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - LOG_LEVEL=info
+    restart: unless-stopped
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile.dashboard
+    ports:
+      - "8501:8501"
+    environment:
+      - SERVER_HOST=server
+      - SERVER_PORT=50051
+    depends_on:
+      - server

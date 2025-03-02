@@ -3,3 +3,5 @@ pandas
 grpcio
 grpcio-tools
 protobuf
+streamlit
+plotly
